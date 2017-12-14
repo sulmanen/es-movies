@@ -33,3 +33,5 @@ Find all the Academy Awards winners in the database. _AA_ stands for winning an 
 Find the film _Elmer Gantry_ in the raw data. Did it win an Academy Award? 
 
 ###[Boolean Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+Find all the Academny Award winners excluding those who were just nominated (AAN).
+

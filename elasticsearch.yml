@@ -1,5 +1,6 @@
 http.host: 0.0.0.0
 
+xpack.security.enabled: false
 http.cors.allow-origin: "*"
 http.cors.enabled: true
 http.cors.allow-credentials: true

@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -ge 2 ]; then
+  action=$1
+  command=$2
+  
+  if [ "$action" == "index" ]; then
+    if [ "$command" == create ]; then
+      index_version=${3:-0}
+      base_dir=${4:-index}
+      es_url=${5:-http://dockerhost:9200}
+
+      
+      echo "PUT $es_url/$index_version"
+      curl -X PUT -H "Content-Type: application/json" -d "@$base_dir/$index_version/index.json" "$es_url/$index_version/?pretty"
+
+      echo "PUT $es_url/$index_version/_mapping/?pretty"
+      curl -X PUT -H "Content-Type: application/json" -d "@$base_dir/$index_version/mapping.json" "$es_url/$index_version/_mapping/movie?pretty"
+    fi
+
+    if [ "$command" == "delete" ]; then
+      index_version=${3:-0}
+      es_url=${4:-http://dockerhost:9200}
+
+      echo "DELETE $es_url/$index_version"
+      curl -X DELETE "$es_url/$index_version/?pretty"
+    fi
+
+    if [ "$command" == "alias" ]; then
+      alias=$3
+      add=$4
+      remove=${5}
+      es_url=${6:-http://dockerhost:9200}
+
+      if [ -z ${remove} ]; then
+        payload="
+        {
+            \"actions\": [
+                { \"add\": {
+                    \"alias\": \"$alias\",
+                    \"index\": \"$add\"
+                }}               
+            ]
+        }
+    "  
+      else
+        payload="
+        {
+            \"actions\": [
+                { \"add\": {
+                    \"alias\": \"$alias\",
+                    \"index\": \"$add\"
+                }},
+                { \"remove\": {
+                    \"alias\": \"$alias\",
+                    \"index\": \"$remove\"
+                }}               
+            ]
+        }
+    "
+      fi
+      echo "$payload"
+      curl -X POST -H "Content-Type: application/json" "$es_url/_aliases?pretty" -d"$payload"
+    fi
+  fi
+else
+    echo "-- Elasticsearch Tool --"
+    echo "et index create name_of_my_index [ index_basedir ] [ elasticsearch url ]"
+    echo "et index delete name_of_my_index [ elasticsearch url]"
+    echo "et index alias alias_name index_name [ name_of_index_to_remove_alias ] [ elasticsearch url]"
+fi
+

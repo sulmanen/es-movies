@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ES!</title>
+    <style>
+      .es-url {
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Oh my oh my!</h1>
+      <input class="es-url"
+             id="path"
+             type="url"
+             placeholder="URL"
+             value="http://localhost:9200/movies/_search?q="/>
+
+      <pre id="dsl" contenteditable=true>
+        {
+  "query": {
+    "bool": {
+      "filter": {
+        "term": {
+          "status": "$"
+        }
+      }
+    }
+  }
+}
+      </pre>
+
+      <div>
+        <input id="query"
+               type="text"
+               placeholder="Query"
+               autofocus="true"/>
+      </div> 
+    </header>
+    <section>
+      <div id="results"></div>
+      <pre id="raw"></pre>
+    </section>
+
+    <script type="text/javascript">
+      const esUrl = document.getElementById('path').value;
+
+      const title = ({ title, director }, score) => `<h4><small>${score}</small> - ${title} <small>${director}</small></h4>`;
+
+      const score = (score) => `<small>${score}</small>`;
+      
+      const result = ({ _score, _source }) => `<div>${title(_source, _score)}</div>`;
+      
+      function display() {
+        const { hits } = JSON.parse(this.responseText);
+      
+        document.getElementById('results').innerHTML = hits.hits.map(result).join('');
+
+      document.getElementById('raw').textContent = JSON.stringify(JSON.parse(this.responseText), null, ' ');
+      };
+
+      const qEl = document.getElementById('query');
+      qEl.addEventListener('input', (e) => {
+        const xhr = new XMLHttpRequest();
+        xhr.overrideMimeType('application/json');
+        xhr.addEventListener('load', display);
+        xhr.open('GET', esUrl + e.target.value);
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>

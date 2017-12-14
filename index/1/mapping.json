@@ -1,0 +1,34 @@
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "text"
+    },
+    "year": {
+      "type": "date"
+    },
+    "director": {
+      "type": "text" 
+    },
+    "type": {
+      "type": "keyword"
+    }
+    "producers": {
+      "type": "text"
+    },
+    "process": {
+      "type": "keyword"
+    },
+    "category": {
+      "type": "keyword"
+    },
+    "studio": {
+      "type": "text"
+    },
+    "location": {
+      "type": "text"
+    }
+  } 
+}

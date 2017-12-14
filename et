@@ -30,7 +30,7 @@ if [ $# -ge 2 ]; then
     if [ "$command" == "alias" ]; then
       alias=$3
       add=$4
-      remove=${5}
+      remove=${5-}
       es_url=${6:-http://dockerhost:9200}
 
       if [ -z ${remove} ]; then

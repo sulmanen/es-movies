@@ -26,12 +26,12 @@ Find all the Academy Awards winners in the database. _AA_ stands for winning an 
 
 Find the film _Elmer Gantry_ in the raw data. Did it win an Academy Award? 
 
-###[Boolean Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+### [Boolean Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
 
 1. Find all the Academny Award winners excluding those who were just nominated (AAN).
 2. Try to filter all those movies which contain the word 'Vampire'. How many are there? What's up with the score.
 
-###[Funtion Score Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html)
+### [Funtion Score Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html)
 1. The Best films are not in any particular order. Let's see if we can use a function score to order the results after matches have been made. Perhaps the field_value_factor or the decay functions can help us order our movies.
 
 2. Something isn't right. Let's look at what our index looks like. ```curl http://localhost:9200/movies```.

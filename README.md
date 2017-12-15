@@ -44,16 +44,21 @@ Tuning relevance in Elasticsearch is a dance between the index and the query. Le
 ```./et reindex 0 1```
 ```./et index alias movies 1 0```
 
-### Find academy award winners in drama category?
+You can update the index in production in this way without downtime, and also roll back if the new index has a problem.
 
-### It's a long way from V to Vampire
+### Find academy award winners in drama category?
+'Dram' is the keyword to find Dramas. Can you find drama academy award winners?
+
+### [It's a long way from V to Vampire](https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html)
 Once you start typing into the typeahead field the experience isn't very satisfying. Let's create a typeahead index.
 
 ### Let's add language analyzers into the mix
 
 ### They have inherent weaknesses, so let's add the original field to the side of the analyzed one.
 
-### Bigrams
+### But what about stop words?
+
+### Bigrams for efficiently matching names
 
 ### Exact phrase matching
 

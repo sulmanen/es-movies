@@ -1,4 +1,4 @@
-# Hands on Elasticsearch
+# [Paws on Elasticsearch](http://slides.com/samuli/deck-29/fullscreen)
 Elasticsearch is a good fulltext search engine.
 
 - Wikipedia search is powered by Elasticsearch.

@@ -9,14 +9,6 @@ Elasticsearch is a good fulltext search engine.
 ## Prerequisites
 Docker and Python 2.7 with pip or easy_istall and internet access.
 
-## Apache Lucene
-Full-text search engine. Elasticsearch uses [Lucene's Practical Scoring Function](https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html) by default.
-
-Pluggable scoring functions like the Vector Space Model and [Okapi BM 25](https://www.elastic.co/guide/en/elasticsearch/guide/current/pluggable-similarites.html#bm25).
-
-## Elasticsearch
-Elasticsearch is Apache Lucene wrapped in a scalable and relatively easy to use RESTful interface. 
-
 ## Excercises
 We are using [UCI Movies Dataset](https://archive.ics.uci.edu/ml/datasets/Movie) of over 10k films. The titles are from late 1800's to 1999.
 

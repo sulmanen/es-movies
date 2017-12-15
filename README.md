@@ -3,7 +3,7 @@ Elasticsearch is a good fulltext search engine.
 
 - Wikipedia search is powered by Elasticsearch.
 - The Guardian joins access log data with social network data using Elasticsearch to give editors an idea of how public is reponding to articles.
-- StackOverflow fulltext search is powered by Elasticsearch. _more like this_ to find similar answers.
+- StackOverflow fulltext search is powered by Elasticsearch. They use the _more like this_ feature to find similar answers.
 - GitHub uses Elasticsearch to query 130 billion lines of code
 
 ## Prerequisites

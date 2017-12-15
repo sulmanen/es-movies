@@ -18,6 +18,8 @@ Docker and Python 2.7 with pip or easy_istall and internet access.
 5. Create alias. ```./et index alias movies 0```
 6. Verify alias. ```curl http://localhost:9200/_aliases```
 7. Load data. ```python2.7 import-movies.py``` 
+8. Fire up crappy ui. ```http-server```
+9. Navigate to ```http://localhost:8080/```
 
 ## Excercises
 We are using [UCI Movies Dataset](https://archive.ics.uci.edu/ml/datasets/Movie) of over 10k films. The titles are from late 1800's to 1999.

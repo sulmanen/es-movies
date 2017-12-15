@@ -3,7 +3,7 @@ from BeautifulSoup import BeautifulSoup
 import json
 import requests
 
-esUrl = "http://dockerhost:9200"
+esUrl = "http://localhost:9200"
 
 def title(row):
     return row.contents[1].string.replace("T:", "").strip()

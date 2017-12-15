@@ -25,7 +25,9 @@ We are using [UCI Movies Dataset](https://archive.ics.uci.edu/ml/datasets/Movie)
 2. Verify. ```curl http://localhost:9200```
 3. Deps. ```pip install requests
       pip install BeautifulSoup```
-4. Load data using es _bulk interface in nd-json format. ```python2.7 import-movies.py``` 
+4. Create index. ```./et index create 0```
+5. Create alias. ```./et index alias movies 0```
+5. Load data using es _bulk interface in nd-json format. ```python2.7 import-movies.py``` 
 
 ### [URI Search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html)
 Find all the Academy Awards winners in the database. _AA_ stands for winning an Academy Award.
@@ -33,5 +35,14 @@ Find all the Academy Awards winners in the database. _AA_ stands for winning an 
 Find the film _Elmer Gantry_ in the raw data. Did it win an Academy Award? 
 
 ###[Boolean Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
-Find all the Academny Award winners excluding those who were just nominated (AAN).
 
+1. Find all the Academny Award winners excluding those who were just nominated (AAN).
+2. Try to filter all those movies which contain the word 'Vampire'. How many are there? What's up with the score.
+
+###[Funtion Score Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html)
+1. The Best films are not in any particular order. Let's see if we can use a function score to order the results after matches have been made. Perhaps the field_value_factor or the decay functions can help us order our movies.
+
+2. Something isn't right. Let's look at what our index looks like. ```curl http://localhost:9200/movies```.
+
+### Creating an index mapping.
+Tuning relevance in Elasticsearch is a dance between the index and the query. Let's add some mappings! In order to change the mappings, we will create a new index named 1. There are some ready made mappings. But is there something we should change to make the function score work?

@@ -14,8 +14,7 @@
       <input class="es-url"
              id="path"
              type="url"
-             placeholder="URL"
-             value="http://localhost:9200/movies/_search?q="/>
+             placeholder="URL"/>
 
       <pre id="dsl" contenteditable=true>
       </pre>
@@ -29,23 +28,30 @@
                autofocus="true"/>
       </div> 
     </header>
+    
     <section>
+      <h3 id="total"></h3>
       <div id="results"></div>
       <pre id="raw"></pre>
     </section>
 
     <script type="text/javascript">
       const DSL_KEY = 'elasticsearch_training_dsl_key';
+      const PATH_KEY = 'elasticsearch_training_path_key';
+      
       const initialDSL = {query: { bool: { filter: { term: { title: '$q'}}}}};
+
+      const getPathEl = () => document.getElementById('path');
       
       const getDSLEl = () => document.getElementById('dsl');
 
       const dslLocal = window.localStorage.getItem(DSL_KEY);
-
+      getPathEl().value = window.localStorage.getItem(PATH_KEY) || "http://localhost:9200/movies/_search?q=";
+      
       getDSLEl().textContent = dslLocal || JSON.stringify(initialDSL, null, '  ');
       
-      const title = ({ title, director }, score) =>
-      `<h4><small>${score}</small> - ${title} <small>${director}</small></h4>`;
+      const title = ({ title, director, year }, score) =>
+      `<h4><small>${score} - ${year}</small> - ${title} <small>${director}</small></h4>`;
 
       const score = (score) => `<small>${score}</small>`;
       
@@ -53,23 +59,24 @@
       
       function display() {
         const { hits } = JSON.parse(this.responseText);
-      
+        document.getElementById('total').textContent = hits.total; 
         document.getElementById('results').innerHTML = hits.hits.map(result).join('');
 
         document.getElementById('raw').textContent = JSON.stringify(JSON.parse(this.responseText), null, ' ');
       };
       
       const qEl = document.getElementById('query');
-
+      
       qEl.addEventListener('input', (e) => {
         const esUrl = document.getElementById('path').value;
         const xhr = new XMLHttpRequest();
-        xhr.overrideMimeType('application/json');
+        
         xhr.addEventListener('load', display);
-        xhr.open('GET', esUrl);
+        xhr.open('POST', `${esUrl}?size=20`, true);
+        xhr.setRequestHeader("Content-type", 'application/json');
         window.localStorage.setItem(DSL_KEY, getDSLEl().textContent);
       
-        xhr.send(getDSLEl().textContent.replace('$q', e.target.val));
+        xhr.send(getDSLEl().textContent.replace('$q', e.target.value));
       });
 
       const prettyButtonEl = document.getElementsByClassName('pretty')[0];
@@ -77,6 +84,10 @@
       prettyButtonEl.addEventListener('click', (e) => {
         const dsl = getDSLEl();
         dsl.textContent = JSON.stringify(JSON.parse(dsl.textContent), null, '  ');
+      });
+
+      getPathEl().addEventListener('change', (e) => {
+        window.localStorage.setItem(PATH_KEY, e.target.value);
       });
     </script>
   </body>

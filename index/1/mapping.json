@@ -7,14 +7,11 @@
       "type": "text"
     },
     "year": {
-      "type": "date"
+      "type": "text"
     },
     "director": {
       "type": "text" 
     },
-    "type": {
-      "type": "keyword"
-    }
     "producers": {
       "type": "text"
     },
@@ -29,6 +26,9 @@
     },
     "location": {
       "type": "text"
+    },
+    "awards": {
+      "type" : "keyword"
     }
   } 
 }

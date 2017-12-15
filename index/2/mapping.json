@@ -1,0 +1,8 @@
+{
+        "properties": {
+            "director": {
+                "type":     "text",
+                "analyzer": "autocomplete"
+            }
+        }
+}

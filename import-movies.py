@@ -15,6 +15,8 @@ def bad(row):
     return not row.contents or len(row.contents) < 10 or not row.contents[0].string or "td>" in row.contents[0].string or title(row) == "title"
 
 def year(row):
+    if not row.contents[2].string or not row.contents[2].string.isdigit():
+      return ""
     return row.contents[2].string.replace("x", "0").replace("D:","").strip()
 
 def director(row):

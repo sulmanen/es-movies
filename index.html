@@ -71,7 +71,17 @@
         const esUrl = document.getElementById('path').value;
         const xhr = new XMLHttpRequest();
         
-        xhr.addEventListener('load', display);
+      xhr.addEventListener('load', display);
+      xhr.onreadystatechange = (e) => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 400) {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('raw').textContent = JSON.stringify(JSON.parse(xhr.responseText), null, ' ');
+
+          }
+        }
+      };
+      
         xhr.open('POST', `${esUrl}?size=20`, true);
         xhr.setRequestHeader("Content-type", 'application/json');
         window.localStorage.setItem(DSL_KEY, getDSLEl().textContent);

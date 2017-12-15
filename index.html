@@ -74,7 +74,7 @@
       xhr.addEventListener('load', display);
       xhr.onreadystatechange = (e) => {
         if (xhr.readyState === 4) {
-          if (xhr.status === 400) {
+          if (xhr.status === 400 || xhr.status === 500) {
             document.getElementById('results').innerHTML = '';
             document.getElementById('raw').textContent = JSON.stringify(JSON.parse(xhr.responseText), null, ' ');
 

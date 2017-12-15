@@ -46,3 +46,22 @@ Find the film _Elmer Gantry_ in the raw data. Did it win an Academy Award?
 
 ### Creating an index mapping.
 Tuning relevance in Elasticsearch is a dance between the index and the query. Let's add some mappings! In order to change the mappings, we will create a new index named 1. There are some ready made mappings. But is there something we should change to make the function score work?
+
+```./et create index 1```
+```./et reindex 0 1```
+```./et index alias movies 1 0```
+
+### Find academy award winners in drama category?
+
+### It's a long way from V to Vampire
+Once you start typing into the typeahead field the experience isn't very satisfying. Let's create a typeahead index.
+
+### Let's add language analyzers into the mix
+
+### They have inherent weaknesses, so let's add the original field to the side of the analyzed one.
+
+### Bigrams
+
+### Exact phrase matching
+
+### Fuzzy query and minimum should match

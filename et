@@ -3,9 +3,10 @@ set -euo pipefail
 
 if [ $# -ge 2 ]; then
   action=$1
-  command=$2
+
   
   if [ "$action" == "index" ]; then
+      command=$2
     if [ "$command" == create ]; then
       index_version=${3:-0}
       base_dir=${4:-index}
@@ -63,6 +64,16 @@ if [ $# -ge 2 ]; then
       echo "$payload"
       curl -X POST -H "Content-Type: application/json" "$es_url/_aliases?pretty" -d"$payload"
     fi
+  fi
+  if [ "$action" == "reindex" ]; then
+      from=$2
+      to=$3
+      es_url=${4:-http://dockerhost:9200}
+      
+      curl -X POST "$es_url/_reindex?pretty" -H "Content-type: application/json" -d "{
+        \"source\": {\"index\": \"$from\"},
+        \"dest\": {\"index\": \"$to\"}
+    }"
   fi
 else
     echo "-- Elasticsearch Tool --"

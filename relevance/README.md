@@ -1,16 +1,9 @@
 # relevance
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
+Test driven relevance tuning using Clojure and Elasticsearch.
 
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar relevance-0.1.0-standalone.jar [args]
 
 ## Options
 

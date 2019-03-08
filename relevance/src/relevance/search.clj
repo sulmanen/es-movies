@@ -9,13 +9,25 @@
 (defn- search-url [{:keys [rest-url index]}]
   (str/join "/" [rest-url index "_search"]))
 
+(defn- make-query [q] {
+  "query" {
+    "bool" {
+      "filter" {
+        "term" {
+          "title" q
+        }
+      }
+    }
+  }
+})
+
 (defn search! [query from size]
   (print (json/generate-string query))
   (let [url          (search-url options)
         request-opts {:url          url
                       :method       :get
                       :timeout      http-request-timeout-ms
-                      :body         (json/generate-string query)
+                      :body         (json/generate-string (make-query query))
                       :headers      {"Content-Type" "application/json"}
                       :query-params {:from from :size size}}
         {:keys [body status error]} @(request request-opts)]

@@ -3,6 +3,9 @@
             [relevance.core :refer :all]
             [relevance.search :refer [search!]]))
 
+(defn get-first-hit [res]
+  (get-in (first (get-in res ["hits" "hits"])) ["_source" "title"]))
+
 (deftest can-query
   (testing "We can query for woman and get results"
-    (is (= (search! "woman" 0 25) 1))))
+    (is (= (get-first-hit (search! "woman" 0 25)) "Sherlock Holmes and the Spider Woman"))))

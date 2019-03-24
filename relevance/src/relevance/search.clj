@@ -12,9 +12,10 @@
 (defn- make-query [q] {
   "query" {
     "bool" {
-      "filter" {
-        "term" {
-          "title" q
+      "must" {
+              "multi_match" {
+                             "query" q
+                             "fields" ["title" "director" "year"]
         }
       }
     }

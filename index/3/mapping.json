@@ -1,0 +1,50 @@
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "year": {
+      "type": "date"
+    },
+    "director": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "producers": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "studio": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "process": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "category": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "awards": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    },
+    "location": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
+    }
+  }
+}

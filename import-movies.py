@@ -2,6 +2,7 @@ import urllib2
 from BeautifulSoup import BeautifulSoup
 import json
 import requests
+from datetime import datetime
 
 esUrl = "http://localhost:9200"
 
@@ -19,10 +20,13 @@ def year(row):
       return ""
     return row.contents[2].string.replace("x", "0").replace("D:","").strip()
 
+def date(year):
+    return datetime.strptime(year, '%Y').strftime('%Y-%m-%dT')
+
 def director(row):
     if not row.contents[3].string:
       return ""
-  
+
     return row.contents[3].string.replace("D:", "").strip()
 
 def producers(row):

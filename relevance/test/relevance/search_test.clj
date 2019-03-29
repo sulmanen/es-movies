@@ -17,15 +17,30 @@
                 (if (and first (>= first second)) second false))
               (map (fn [hit] (read-string (subs (get-in hit ["_source" "year"]) 0 4))) hits)) true false))
 
+(defn pluck [hits field]
+  (map (fn [hit] (get-in hit ["_source" field])) hits))
+
 (deftest can-query
   (testing "We can query for pulp and get results"
-    (is (= (get-first-hit (search! "pulp" 0 6) "title")
-           "Pulp Fiction"))))
+    (is (= (pluck (get-hits (search! "pulp" 0 6)) "title")
+           ["Pulp Fiction"]))))
 
 (deftest can-query-by-director
   (testing "Can query by director"
-    (is (= (get-first-hit (search! "tarantino" 0 6) "director")
-           "Tarantino"))))
+    (is (= (pluck (get-hits (search! "Hitchcock" 0 6)) "director")
+           ["T.Demme"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"]))))
+
+(deftest can-query-by-title
+  (testing "Can query by title"
+    (is (= (pluck (get-hits (search! "sound" 0 6)) "title")
+           ["The Sound of Music"
+            "The Sound and the Fury"
+            "The Sound Barrier"]))))
 
 (deftest query-by-year
   (testing "query by year"

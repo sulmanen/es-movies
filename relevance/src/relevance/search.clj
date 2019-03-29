@@ -10,7 +10,7 @@
   (str/join "/" [rest-url index "_search"]))
 
 (defn- make-query [q] {"query" {"bool" {"must" {"multi_match" {"query" q
-                                                               "fields" ["title" "director" "year"]}}}}})
+                                                               "fields" ["title" "director" "yearstring"]}}}}})
 
 (defn search! [query from size]
   (print (json/generate-string query))

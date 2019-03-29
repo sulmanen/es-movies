@@ -22,4 +22,4 @@
 (deftest query-by-year
   (testing "query by year"
     (is (= (get-first-hit (search! "1977" 0 25) "year")
-           "1977"))))
+           "1977-01-01T00:00:00"))))

@@ -4,6 +4,7 @@ import json
 import requests
 from datetime import datetime
 
+
 esUrl = "http://localhost:9200"
 
 def title(row):
@@ -21,7 +22,13 @@ def year(row):
     return row.contents[2].string.replace("x", "0").replace("D:","").strip()
 
 def date(year):
-    return datetime.strptime(year, '%Y').strftime('%Y-%m-%dT')
+    if not year:
+        return "1800-01-01"
+
+    if len(year) < 4:
+        year = "1" + year
+
+    return datetime.strptime(year[0:4], '%Y').isoformat()
 
 def director(row):
     if not row.contents[3].string:
@@ -38,7 +45,7 @@ def studio(row):
     if not row.contents[5].string:
         return ""
     return row.contents[5].string.replace("S:", "").replace("SU:", "").replace("ST:","").strip()
-      
+
 def process(row):
     if not row.contents[6].string:
         return ""
@@ -62,11 +69,11 @@ def location(row):
 def rowToMovie(row):
     if bad(row):
         return None
-    
+
     return {
         'id': id(row),
         'title': title(row),
-        'year': year(row),
+        'year': date(year(row)),
         'director': director(row),
         'producers': producers(row),
         'studio': studio(row),
@@ -74,7 +81,7 @@ def rowToMovie(row):
         'category': category(row),
         'awards': awards(row),
         'location': location(row)
-        
+
     }
 
 def movieToBulk(movie):
@@ -87,12 +94,12 @@ def movieToBulk(movie):
 
 def load(bulk):
   headers = { 'content-type': 'application/x-ndjson' }
-  return requests.post(esUrl + "/_bulk", data=bulk, headers=headers)    
-        
+  return requests.post(esUrl + "/_bulk", data=bulk, headers=headers)
+
 page = urllib2.urlopen("https://archive.ics.uci.edu/ml/machine-learning-databases/movies-mld/data/main.html")
 soup = BeautifulSoup(page)
 accumulator = []
-    
+
 for row in soup.findAll('tr'):
     movie = rowToMovie(row)
     if movie:
@@ -100,5 +107,4 @@ for row in soup.findAll('tr'):
         if (len(accumulator) == 100):
             print(load(''.join(accumulator)).text)
             accumulator = []
-print(load('\n'.join(accumulator)).text)
-
+load('\n'.join(accumulator)).text

@@ -9,11 +9,18 @@
 (defn- search-url [{:keys [rest-url index]}]
   (str/join "/" [rest-url index "_search"]))
 
-(defn- make-query [q] {"query" {"bool" {"must" {"multi_match" {"query" q
-                                                               "fields" ["title" "director" "yearstring"]}}}}})
+(defn- make-query [q]
+  {"query" {"bool" {"must"
+                    {"function_score" {"functions" [{"exp" {"year" {"origin" "1999-10-16T13:13:12+03:00"
+                                                                    "scale" "1825d"
+                                                                    "offset" "0d"
+                                                                    "decay" 0.01}}}]
+                                       "query"
+                                       {"multi_match"
+                                        {"query" q
+                                         "fields" ["title" "director" "yearstring"]}}}}}}})
 
 (defn search! [query from size]
-  (print (json/generate-string query))
   (let [url          (search-url options)
         request-opts {:url          url
                       :method       :get

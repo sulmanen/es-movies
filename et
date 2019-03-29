@@ -4,7 +4,6 @@ set -euo pipefail
 if [ $# -ge 2 ]; then
   action=$1
 
-  
   if [ "$action" == "index" ]; then
       command=$2
     if [ "$command" == create ]; then
@@ -12,7 +11,7 @@ if [ $# -ge 2 ]; then
       base_dir=${4:-index}
       es_url=${5:-http://localhost:9200}
 
-      
+
       echo "PUT $es_url/$index_version"
       curl -X PUT -H "Content-Type: application/json" -d "@$base_dir/$index_version/index.json" "$es_url/$index_version/?pretty"
 
@@ -41,10 +40,10 @@ if [ $# -ge 2 ]; then
                 { \"add\": {
                     \"alias\": \"$alias\",
                     \"index\": \"$add\"
-                }}               
+                }}
             ]
         }
-    "  
+    "
       else
         payload="
         {
@@ -56,7 +55,7 @@ if [ $# -ge 2 ]; then
                 { \"remove\": {
                     \"alias\": \"$alias\",
                     \"index\": \"$remove\"
-                }}               
+                }}
             ]
         }
     "
@@ -69,7 +68,7 @@ if [ $# -ge 2 ]; then
       from=$2
       to=$3
       es_url=${4:-http://localhost:9200}
-      
+
       curl -X POST "$es_url/_reindex?pretty" -H "Content-type: application/json" -d "{
         \"source\": {\"index\": \"$from\"},
         \"dest\": {\"index\": \"$to\"}
@@ -81,4 +80,3 @@ else
     echo "et index delete name_of_my_index [ elasticsearch url]"
     echo "et index alias alias_name index_name [ name_of_index_to_remove_alias ] [ elasticsearch url]"
 fi
-

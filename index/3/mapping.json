@@ -9,7 +9,13 @@
       "search_analyzer": "english_custom"
     },
     "year": {
-      "type": "date"
+      "type": "date",
+      "copy_to": "yearstring"
+    },
+    "yearstring": {
+      "type":     "text",
+      "analyzer": "autocomplete",
+      "search_analyzer": "english_custom"
     },
     "director": {
       "type":     "text",

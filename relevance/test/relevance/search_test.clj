@@ -12,7 +12,7 @@
 (defn get-first-hit [res field]
   (get-nth res field 0))
 
-(defn ordered [hits]
+(defn ordered? [hits]
   (if (reduce (fn [first second]
                 (if (and first (>= first second)) second false))
               (map (fn [hit] (read-string (subs (get-in hit ["_source" "year"]) 0 4))) hits))
@@ -67,4 +67,4 @@
 
 (deftest ordered-by-year
   (testing "results ordered by year latest first"
-    (is (ordered (get-hits (search! "woman" 0 6))) true)))
+    (is (ordered? (get-hits (search! "woman" 0 6))) true)))

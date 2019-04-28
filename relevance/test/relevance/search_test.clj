@@ -43,8 +43,7 @@
     (is (= (pluck (get-hits (search! "sound" 0 6)) "title")
            ["The Sound of Music"
             "The Sound and the Fury"
-            "The Sound Barrier"
-]))))
+            "The Sound Barrier"]))))
 
 (deftest can-query-by-year
   (testing "Can query by title"

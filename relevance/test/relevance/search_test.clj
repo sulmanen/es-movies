@@ -67,3 +67,14 @@
 (deftest ordered-by-year
   (testing "results ordered by year latest first"
     (is (ordered? (get-hits (search! "woman" 0 6))) true)))
+
+
+(deftest can-typo
+  (testing "can typo by one character starting with the first two characters"
+    (is (= (pluck (get-hits (search! "Hichcock" 0 6)) "director")
+           ["T.Demme"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"]))))

@@ -18,7 +18,10 @@
                                        "query"
                                        {"multi_match"
                                         {"query" q
-                                         "fields" ["title" "director" "yearstring"]}}}}}}})
+                                         "fuzziness" 1
+                                         "prefix_length" 2
+                                         "max_expansions" 1
+                                          "fields" ["title" "director" "yearstring"]}}}}}}})
 
 (defn search! [query from size]
   (let [url          (search-url options)

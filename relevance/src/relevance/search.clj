@@ -10,7 +10,9 @@
   (str/join "/" [rest-url index "_search"]))
 
 (defn- make-query [q]
-  {"query" {"bool" {"must"
+  {"sort" {"year" "desc"}
+   "query" {"bool" {"should" [{"match" {"yearstring" q}} {"match" {"producers" q}}]
+                    "must"
                     {"function_score" {"functions" [{"exp" {"year" {"origin" "1999-10-16T13:13:12+03:00"
                                                                     "scale" "1825d"
                                                                     "offset" "0d"
@@ -18,7 +20,10 @@
                                        "query"
                                        {"multi_match"
                                         {"query" q
-                                         "fields" ["title" "director" "yearstring"]}}}}}}})
+                                         "fuzziness" 1
+                                         "prefix_length" 2
+                                         "max_expansions" 1
+                                          "fields" ["title" "director" "yearstring"]}}}}}}})
 
 (defn search! [query from size]
   (let [url          (search-url options)

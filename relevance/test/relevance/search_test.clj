@@ -26,17 +26,22 @@
 (deftest can-query-title
   (testing "We can query for pulp and get results"
     (is (= (pluck (get-hits (search! "pulp" 0 6)) "title")
-           ["Pulp Fiction"]))))
+           ["Pulp Fiction"
+            "Pump Up the Volume"
+            "Pumping Iron"
+            "Le pull-over rouge"
+            "The Pumpkin Eater"
+            "Tm:Ensign Pulver"]))))
 
 (deftest can-query-by-director
   (testing "Can query by director"
-    (is (= (pluck (get-hits (search! "Hitchcock" 0 6)) "director")
-           ["T.Demme"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"]))))
+    (is (= (pluck (get-hits (search! "Hitchcock" 0 6)) "title")
+           ["Storefront Hitchcock"
+            "Family Plot"
+            "Topaz"
+            "Torn Curtain"
+            "Marnie"
+            "The Birds"]))))
 
 (deftest can-query-by-title
   (testing "Can query by title"
@@ -48,22 +53,43 @@
 (deftest can-query-by-year
   (testing "Can query by title"
     (is (= (pluck (get-hits (search! "1977" 0 6)) "title")
-           ["L'Diable probalement"
-            "The Spy Who Loved Me"
-            "Man of Marble" "Matababi"
-            "The Island of Dr.~Moreau"
-            "Carry On Emanuelle"]))))
+           ["Audrey Rose"
+            "Looking for Mr.~Goodbar"
+            "The Choirboys"
+            "Another Man, another Chance"
+            "The Good and the Bad"
+            "The Deep"]))))
 
 (deftest can-query-by-partial-year
   (testing "Can query by title"
     (is (= (pluck (get-hits (search! "197" 0 6)) "title")
-           ["Dreamer"
-            "The Innocent"
-            "Mysterious Island of Beautiful Women"
-            "All That Jazz"
-            "The Young Girls of Wilko"
-            "10"]))))
+           ["Wise Blood"
+            "Tm:Escape from Alcatraz"
+            "Tm:Orca the Killer Whale"
+            "Tm:The Martian Chronicles I/II/III"
+            "Een Vrouw tussen Hond en Wolf"
+            "Norma Rae"]))))
 
 (deftest ordered-by-year
   (testing "results ordered by year latest first"
     (is (ordered? (get-hits (search! "woman" 0 6))) true)))
+
+(deftest producer
+  (testing "query by producer"
+    (is (= (pluck (get-hits (search! "Spielberg" 0 6)) "title")
+           ["Saving Private Ryan"
+            "Amistad"
+            "The Lost World: Jurrasic Park"
+            "To Wong Foo, Thanks for Everything, Julie Newmar"
+            "Jurassic Park"
+            "Schindler's List"]))))
+
+(deftest can-typo
+  (testing "can typo by one character starting with the first two characters"
+    (is (= (pluck (get-hits (search! "Hichcock" 0 6)) "director")
+           ["T.Demme"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"
+            "Hitchcock"]))))

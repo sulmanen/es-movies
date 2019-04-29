@@ -35,13 +35,13 @@
 
 (deftest can-query-by-director
   (testing "Can query by director"
-    (is (= (pluck (get-hits (search! "Hitchcock" 0 6)) "director")
-           ["T.Demme"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"
-            "Hitchcock"]))))
+    (is (= (pluck (get-hits (search! "Hitchcock" 0 6)) "title")
+           ["Storefront Hitchcock"
+            "Family Plot"
+            "Topaz"
+            "Torn Curtain"
+            "Marnie"
+            "The Birds"]))))
 
 (deftest can-query-by-title
   (testing "Can query by title"

@@ -74,6 +74,15 @@
   (testing "results ordered by year latest first"
     (is (ordered? (get-hits (search! "woman" 0 6))) true)))
 
+(deftest producer
+  (testing "query by producer"
+    (is (= (pluck (get-hits (search! "Spielberg" 0 6)) "title")
+           ["Saving Private Ryan"
+            "Amistad"
+            "The Lost World: Jurrasic Park"
+            "To Wong Foo, Thanks for Everything, Julie Newmar"
+            "Jurassic Park"
+            "Schindler's List"]))))
 
 (deftest can-typo
   (testing "can typo by one character starting with the first two characters"

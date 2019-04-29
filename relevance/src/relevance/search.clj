@@ -11,7 +11,7 @@
 
 (defn- make-query [q]
   {"sort" {"year" "desc"}
-   "query" {"bool" {"should" {"match" {"yearstring" q}}
+   "query" {"bool" {"should" [{"match" {"yearstring" q}} {"match" {"producers" q}}]
                     "must"
                     {"function_score" {"functions" [{"exp" {"year" {"origin" "1999-10-16T13:13:12+03:00"
                                                                     "scale" "1825d"
